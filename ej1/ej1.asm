@@ -19,11 +19,10 @@ resultado:
 
 section .data                    ; SECCION DE LAS CONSTANTES
 
-fmtInt:
-        db    "%d", 0            ; FORMATO PARA NUMEROS ENTEROS
-
-fmtLF:
-        db    0xA, 0             ; SALTO DE LINEA (LF)
+fmtInt:         db    "%d", 0            ; FORMATO PARA NUMEROS ENTEROS
+fmtLF:          db    0xA, 0             ; SALTO DE LINEA (LF)
+fmtX:           db    "x"                ; SALTO DE LINEA (LF)
+fmtEqual:       db    "="                ; SALTO DE LINEA (LF)
 
 section .text                    ; SECCION DE LAS INSTRUCCIONES
  
@@ -35,10 +34,36 @@ leerNumero:                      ; RUTINA PARA LEER UN NUMERO ENTERO USANDO SCAN
         ret
 
 mostrarNumero:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
-        push dword [resultado]
+        push dword [numero]
         push fmtInt
         call printf
         add esp, 8
+        ret
+
+mostrarResultado:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
+        push dword [ebx]
+        push fmtInt
+        call printf
+        add esp, 8
+        ret
+
+mostarEDI:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
+        push dword edi
+        push fmtInt
+        call printf
+        add esp, 8
+        ret
+
+mostrarMultiplicador:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
+        push fmtX
+        call printf
+        add esp, 4
+        ret
+
+mostrarEqual:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
+        push fmtEqual
+        call printf
+        add esp, 4
         ret
         
 mostrarSaltoDeLinea:             ; RUTINA PARA MOSTRAR UN SALTO DE LINEA USANDO PRINTF
@@ -51,52 +76,38 @@ salirDelPrograma:                ; PUNTO DE SALIDA DEL PROGRAMA USANDO EXIT
         push 0
         call exit
 
+multiplicarYMostrar:
+        mul edi
+        mov ebx,[eax]
+        call mostrarNumero
+        inc edi
+        ret
+
 _start:
 main:                            ; PUNTO DE INICIO DEL PROGRAMA
         call leerNumero
 
-        mov ebx, [numero]
-        mov [resultado], ebx
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
-        add [resultado],ebx
-        call mostrarNumero
-        call mostrarSaltoDeLinea
-
         mov edi,0
-        mov eax, 0
+
+        call while
+
+        call salirDelPrograma
+
+while:  
+        call mostrarNumero
+        call mostrarMultiplicador
+        call mostarEDI
+        call mostrarEqual
+        call mostrarResultado
+        
+        call mostrarSaltoDeLinea
+        mov eax,[numero]
+        inc edi
+        mul edi
+        mov [ebx],eax
+        cmp edi,11
+                je salirDelPrograma
+        jmp while
+        ret
+
+

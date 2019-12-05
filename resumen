@@ -1,0 +1,316 @@
+REGISTROS
+
+Registros de datos            (data register)
+Registros de apuntador        (pointer register)
+Registros de indice			  (index register)   
+
+LOS REGISTROS DE DATOS: son utilizados generalmente para operaciones matematicas y logicas.
+
+hay 4 registros de datos de 32 bits:
+EAX EBX ECX EDX
+
+Estos mismos 4 registros, pueden ser referenciados como de 16 bits: 
+AX BX CX DX
+
+Estos mismos 4 registros de 16 bits, pueden ser llamados en su parte baja y alta de la siguiente manera:
+AH AL, BH BL, CH CL, DH, DL
+
+
+Proposito de los registros de datos:
+
+AX. Es el registro acumulador. es utilizado para operaciones de entrada y salida, y para la mayoria de las operaciones aritmeticas.
+
+BX. Es el registro de base. es utilizado en direccionamiento indexado.
+
+CX. Es el registro contador. es utilizado en operaciones iterativas o de repeticion, para llevar el control de las veces que se repite un proceso.
+
+DX. Es el registro de datos. es tambien usado en operacones de entrada y salida, junto con AX, es utilizado para divisiones y multiplicaciones.
+
+
+REGISTROS DE APUNTADOR:
+hay 3 registros de apuntador de 32 bits:
+EIP ESP EBP
+
+tambien se pueden referenciar en su parte de 16 bits:
+IP SP BP
+
+Proposito de los registros de apuntador:
+
+IP. INSTRUCTOR POINTER: Este registro lleva el control de desplazamiento de la siguiente instruccion a ser ejecutada.
+SP. STACK POINTER: Provee el desplazamiento d ela Pila del programa.
+BP. BASE POINTER: Es utilizado principalmente para referenciar a las variables utilizadas como parametros a subrutinas.
+
+
+REGISTROS DE INDICE:
+hay 2 registros de indices de 32 bits:
+ESI y EDI
+
+tambien se pueden referenciar en su parte de 16 bits:
+SI y DI
+
+estos registros son utilizados para direccionamiento indexado y en ocaciones para sumas y restas.
+
+Proposito de los registros de indice:
+
+SI. SOURCE INDICE: Es utilizado para operaciones de cadena, como la parte Origen de la operacion.
+DI. DESTINATION INDICE: Es utilizado para operaciones de cadena, como la parte destino de la operacion.
+
+
+REGISTROS DE BANDERAS
+Estos registro se utilizan para controlar diversos tipos de resultados que se realizan entre las operaciones
+
+Es un registro de 16 bits, que tiene la siguiente estructura:
+
+Flags -> 			 OF DF IF TF SF ZF	  AF	PF	  CF		
+bits  -> 15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00
+
+
+OverFlow Flag - OF : Indica sobre flujo (overflow) del mas alto bit (izquierdo) despues de haber realizado una operacion aritmetica con signo.
+
+Direction Flag - DF : Indica si las operaciones de comparar o mover datos, se realizaron hacia la izquierda o hacia la derecha.
+					   Cuando el valor es 0 la operacion se realizo de izquierda a derecha
+					   Cuando el valor es 1 la operacion se realizo de derecha a izquierda	
+
+Interrupt Flag - IF : Determina cuando hay una interrupcion externa, por ejemplo una interrupcion del teclado, son ignoradas o procesadas.		   
+					   Cuando el valor es 0 se encuentra deshabilitada.
+					   Cuando el valor es 1 se encuentra habilitada.
+
+Trap Flag	   - TF : Permite que la operacion del procesador sea en modo "Single Step". 
+				      Cuando usamos un programa DEBUG, activamos esta bandera para poder realizar la ejecucion del programa, una por una las instrucciones.		   
+
+Single Flat    		 - SF : Indica el signo de un resultado en una operacion aritmetica. 
+					     	Un resultado Positivo coloca el valor de SF en 0
+							Un resultado Negativo coloca el valor de SF en 1
+
+Zero Flag            - ZF : Indica si un resultado de una operacion aritmetica o de comprobacion fue 0.
+					        un resultado diferente de 0 coloca el valor en 0
+					        un resultado igual a 0 coloca el valor en 1
+
+Auxiliary carry Flag - AF : Contiene el acarreo de una operacion aritmetica, del bit 3 al bit 4
+							cuando hay un Acarreo del bit 3 al bit 4, AF se pone en 1
+
+
+Parity Flag          - PF : Indica si el total de unos (1) en una operacion aritmetica, es par o impar.
+							 si la cantidad de unos (1) es par, pondra la bandera en 0
+							 si la cantidad de unos (1) es impar, pondra la bandera en 1
+							 
+Carry Flag           - CF : Contiene el acarreo de 0 a 1, al realizar una operacion aritmetica 	que desborde el ultimo bit significativo. es decir el de la izquierda.
+							Tambien contiene el ultimo bit de una operacion shift o rotate.
+							
+									
+REGISTROS DE SEGMENTOS
+
+Register Code Segment: Es un registro de 16 bits en el cual se encuentra depositada la direccion inicial del Segmento de Codigo.
+Register Data Segment: Es un registro de 16 bits en el cual se encuentra depositada la direccion inicial del Segmento de Datos.
+Register Stack Segment: Es un registro de 16 bits en el cual se encuentra depositada la direccion inicial del Segmento de Pila.
+
+Aparte de los 3 anteriores registros de segmento, existen otro 3 utilizados para almacenar datos:
+ES FS GS
+
+Todos los registros de segmento contiene la direccion inicial correspondiente, para acceder a cualquier dato detro del mismo.
+Para esto se debe utilizar la direccion inicial mas un desplazamiendo u offset
+
+DIRECCIONAMIENTO
+
+Existen 3 modos de direccionamiento
+
+DIRECCIONAMIENTO POR REGISTRO
+DIRECCIONAMIENTO INMEDIATO
+DIRECCIONAMIENTO A MEMORIA
+	Direccionamiento directo
+	Direccionamiento directo por desplazamiento
+	Direccionamiento indirecto
+	
+	
+DIRECCIONAMIENTO POR REGISTRO: En este modo, un registro es quien tiene el operando a utilizar.
+							   Dependiente de la instruccion, el registro puede ser el primer operando, el segundo operando o ambos.
+
+Ejemplos:
+
+MOV DX, TAX_RATE ;Registro en el primero operando
+MOV COUNT, CX	 ;Registro en el segundo operando
+MOV EAX, EBX	 ;Ambos operandos son registros
+
+
+
+DIRECCIONAMIENTO INMEDIATO: Es cuando un operando tiene un valor constante o una expresion. 
+							Cuando una instruccion con dos operandos utiliza direccionamiento inmediato,
+							el primer operando puede ser una ubicacion de registro o de memoria,
+							y el segundo operando es una constante inmediata. El primer operando define la longitud de los datos.						   
+
+
+Ejemplos:
+
+definimos 2 datos:
+
+BYTE_VALUE DB 150 ; un byte	
+WORD_vALUE WD 300 ; un Word
+
+direccionamiento inmediato: 
+
+ADD BYTE_VALUE, 65 ;Le sumanos el valor 65 a BYTE_VALUE
+MOV AX, 45H        ;Colocamos el valor constante 45h a AX
+
+
+DIRECCIONAMIENTO DIRECTO: Cuando el operando es una direccion de memoria dentro del segmento de datos.
+
+para localizar la ubicacion exacta de los datos en la memoria, necesitamos la direccion de inicio del segmento,
+que se encuentra tipicamente en los registros DS y un valor de desplazamiento.
+Este valor de desplazamiendo es tambien llamado direccion efectiva.
+
+En el modo de direccionamiento directo, el valor de desplazamiento se especifica directamente como parte de la instruccion,
+habitualmente por el nombre de la variable. El ensamblador calcula el valor de desplazamiento y mantiene una tabla de simbolos,
+que almacena los valores de desplazamiento de todas las variables utilizadas en el programa.
+
+Al abordar directo a la memoria, uno de los operandos se refiere a una ubicacion de memoria y el otro operando hace referencia a un registro.
+
+Por ejemplo:
+
+ADD BYTE_VALUE, DL ; Agrega el valor del registro a la direccion de memoria.
+MOV BX, WORD_vALUE ; El valor indicado en la direccion de memoria, es colocado en BX
+
+
+DIRECCIONAMIENTO DIRECTO - DESPLAZAMIENTO: Este modo de direccionamiento utiliza los operadores aritmeticos para modificar una direccion.
+
+Ejemplo:
+
+Declaramos arreglos o tablas:
+BYTE_TABLE DB 14, 15, 22, 45 		; Tabla o vector de datos
+WORD_TABLE DW 134, 345, 564, 123 	; Tabla o vector e datos
+
+Ejemplo con direccionamiento Directo - Desplazamiento
+
+MOV CL, BYTE_TABLE[2] 			; accede al 3er elemento del Arreglo
+MOV CL, BYTE_TABLE+2			; accede al 3er elemento del Arreglo
+MOV CX, WORD_TABLE[3] 			; accede al 4er elemento del Arreglo
+MOV CX, WORD_TABLE+3			; accede al 4er elemento del Arreglo
+
+
+DIRECCIONAMIENTO INDIRECTO: Este modo de direccionamiento utiliza la capacidad de direccionamiento basado en segmento: desplazamiento.
+							Generalmente los registro base: EBX, EBP o (BX, BP) y los registros de indice ( DI, SI), codificados entre corchetes, son utilizados para ser referencia a memoria.
+							
+El direccionamiento indirecto se utiliza generalmente para las variables que contienen varios elementos, como son las matrices.
+La direccion inicial de la Matriz, se almancena por ejemplo en el registro EBX.
+
+MY_TABLE TIMES 10 DW 0    ; Reserva un Vector o Tabla de 10 words, cada uno inicializado con 0
+
+MOV EBX, [MY_TABLE] ; Coloca la direccion de MY_TABLE en el registro EBX
+MOV [EBX], 110		; Direccionamiento Indirecto. Mueve el valor 110 a la direccion que tiene EBX: MY_TABLE[0] = 110
+ADD EBX, 2 			; Incrementa el valor de EBX EN 2, para que apunte al 2do elemento del vector
+MOV [EBX],123		; Direccionamiento Indirecto. Mueve el valor 123 a la direccion que tiene EBX: MY_TABLE[1] = 123
+
+	
+	
+----------------------------------------------------------------------------------------------------------------------------
+INSTRUCCIONES
+
+mov: 
+Dicha instrucción tiene la sintaxis mov registro, valor
+Ej: mov ax,2 pone el valor 2 en el registro ax, o mov cx,12 pone el valor 12 en el registro cx.
+
+También se puede mover el valor de un registro a otro registro
+podemos ponerle el valor 5 a bx, y luego pasar el valor de bx a cx para que ambos valgan 5.
+Ej: mov ax, bx
+
+Instrucción add (sumar)
+La sintaxis de dicha instrucción es add registro, valor
+
+Por ejemplo, para sumarle 3 al registro ax, escribimos add ax, 3. Si antes tenía el valor 4 ahora tendrá el valor 7.
+tambien se pueden sumar 2 registros: ejemplo: 
+add ax,bx
+
+Otras instrucciones aritméticas y lógicas
+Sub, or, xor, and
+
+Sub se utiliza para restar:
+ejemplo:
+; sub, resta
+mov ax,4
+sub ax,3
+;or
+mov bl,11010010b
+or bl,10101010b
+;xor
+mov cl,11010010b
+xor cl,10101010b
+;and
+mov dl,11010010b
+and dl,10101010b
+
+
+La instrucción not:
+
+La instrucción not nos permite invertir el patrón de bits de un registro.
+Por ejemplo, si al vale 11011001b, aplicando el not pasa a valer 00100110b.
+not registro
+
+La instrucción neg: 
+
+multiplicar por -1.
+La instrucción neg es similar al not, ya que también es unaria.
+Recuerda que los números negativos se almacenan codificados en CA2
+
+inc y dec
+Cuando sumamos y restamos, algo muy común es que sumemos o restemos uno.
+
+Por ejemplo, si queremos sumarle 1 al registro ax y restarle 1 al registro bl, podemos escribir add ax,1 y sub bl,1.
+ejemplo:
+
+org 2000h
+mov ax,5
+inc ax
+mov bl,20
+dec bl
+hlt
+end
+
+
+------------------------------------------------------------------------------------------------------------------------------
+ESTRUCTURA DE UN PROGRAMA NASM:
+
+Un programa en NASM, puede contar de 3 Partes o Secciones.
+
+la section .data: ; Sección de declaración de CONSTANTES que se usaran en el programa. Por ejemplo, la especificación de formatos.
+				; Para definir constantes se utilizan las instrucciones EQUI, DB, DW, DD, DQ, DT 
+				
+Ejemplo:
+
+section .data					; Define la seccion
+sMensaje: db 'Hola mundo'		; Define una cadena con un mensaje
+iMensajeLongitud equ 10			; Declare un valor numerico
+iButterLongitud dw 1024			; Declare un butter de 1024 word
+
+				
+la seccion .bss  ; Esta seccion es utilizada para declarar variables, es posible utilizar las instrucciones, RESB, RESW, RESD, RESQ, REST utilizadas para reservar espacio en memoria para las variables.
+
+Ejemplo:
+
+section .bss
+		sArchivoNombre: resb	255 	; Reserve 255 bytes
+		iNumero: 		resb	1		; Reserve 1 byte
+		iNumeroGrande:  resw	1		;Reserve 1 word (1 word = 2 bytes)
+		arrDatos: 		resq 	10		;Reserve un array de 10 reals
+		
+		
+La seccion .text  ; Esta es la seccion en la cual se escribe el codigo ensamblador. Esta seccion debeiniciar con la declaracion global_start, la cual se utiliza para indicar donde inicia la ejecucion del programa.
+
+Ejemplo:
+
+section .text 		; Se declara la seccion
+	Global_start	; Se indica la declaracion global de inicio
+	_start:			;El inicio del codigo
+	pop	ebx			;instrucciones
+	.
+	.
+	.
+	
+							
+OPERACIONES:
+
+MUL : Multiplica el valor dado por el valor del registro AH (Si es de 8 bits) AX (si es de 16 bits), el valor se guardar en en AX (8 BITS) o DX:AX (16 bits) 							
+
+Ejemplo:
+
+MUL bl
+
+							
