@@ -17,15 +17,11 @@ section .data                               ; SECCION DE LAS CONSTANTES
 
 fmtInt:             db    "%d", 0           ; FORMATO PARA NUMEROS ENTEROS
 fmtLF:              db    0xA, 0            ; SALTO DE LINEA (LF)
-fmtEsPolindromo:    db    "El texto ingresado es un polindromo", 0               ; SALTO DE LINEA (LF)
-fmtNoEsPolindromo:  db    "El texto ingresado no es un polindromo", 0            ; SALTO DE LINEA (LF)
-fmtX:               db    0x78, 0           ; SALTO DE LINEA (LF)
 
-caracterEDI: 			resb    1           ; 1 byte (dato)
-					    resb    3           ; 3 bytes (relleno)
+fmtIngreseTexto:    db    "Ingrese un texto: ", 0               ; SALTO DE LINEA (LF)
 
-caracterESI: 			resb    1           ; 1 byte (dato)
-					    resb    3           ; 3 bytes (relleno)
+fmtEsPalindromo:    db    "El texto ingresado es un Palindromo", 0               ; SALTO DE LINEA (LF)
+fmtNoEsPalindromo:  db    "El texto ingresado no es un Palindromo", 0            ; SALTO DE LINEA (LF)
 
 section .text                               ; SECCION DE LAS INSTRUCCIONES
  
@@ -36,34 +32,14 @@ leerCadena:                                 ; RUTINA PARA LEER UNA CADENA USANDO
     add esp, 4
     ret
 
-mostrarEDI:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
-        push dword edi
-        push fmtInt
-        call printf
-        add esp, 8
-        ret
-
-mostrarESI:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
-        push dword esi
-        push fmtInt
-        call printf
-        add esp, 8
-        ret
+mostrarIngreseTexto:                        ;RUTINA PARA MOSTRAR POR PANTALLA LA INDICACION AL USUARIO
+    push fmtIngreseTexto
+    call printf
+    add esp, 4
+    ret
 
 mostrarSaltoDeLinea:                        ; RUTINA PARA MOSTRAR UN SALTO DE LINEA USANDO PRINTF
     push fmtLF
-    call printf
-    add esp, 4
-    ret
-
-mostrarCaracterEDI:                        ; RUTINA PARA MOSTRAR UN SALTO DE LINEA USANDO PRINTF
-    push caracterEDI
-    call printf
-    add esp, 4
-    ret
-
-mostrarCaracterESI:                        ; RUTINA PARA MOSTRAR UN SALTO DE LINEA USANDO PRINTF
-    push caracterESI
     call printf
     add esp, 4
     ret
@@ -74,6 +50,7 @@ salirDelPrograma:                ; PUNTO DE SALIDA DEL PROGRAMA USANDO EXIT
 
 _start:
 main:                            ; PUNTO DE INICIO DEL PROGRAMA
+    call mostrarIngreseTexto
     call leerCadena
 
     mov edi,0
@@ -88,46 +65,33 @@ irAlFinal:
     inc edi
     mov bx,[cadena+edi]
     cmp bx,0
-            je verificarPolindromo
+            je verificarPalindromo
     jmp irAlFinal
     ret
 
-verificarPolindromo:
+verificarPalindromo:
     dec edi
     inc esi
     
-    call mostrarESI
-    call mostrarEDI
-
     cmp edi,0
-        je esPolindromo
+        je esPalindromo
 
     mov al,[cadena+esi]
-    mov [caracterESI],al
-    call mostrarCaracterESI
-
     mov ah,[cadena+edi]
-    mov [caracterEDI],ah
-    call mostrarCaracterEDI
-    
-    mov ax,[caracterESI]
-    mov bx,[caracterEDI]
 
-    cmp ax,bx
-        je verificarPolindromo
-    jmp noEsPolindromo
+    cmp al,ah
+        je verificarPalindromo
+    jmp noEsPalindromo
     ret
 
-esPolindromo:
-    push fmtEsPolindromo
+esPalindromo:
+    push fmtEsPalindromo
     call printf
     add esp, 4
     call salirDelPrograma
-    ret
 
-noEsPolindromo:
-    push fmtNoEsPolindromo
+noEsPalindromo:
+    push fmtNoEsPalindromo
     call printf
     add esp, 4
-    ret
     call salirDelPrograma
