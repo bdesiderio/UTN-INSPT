@@ -21,8 +21,8 @@ section .data                    ; SECCION DE LAS CONSTANTES
 
 fmtInt:         db    "%d", 0            ; FORMATO PARA NUMEROS ENTEROS
 fmtLF:          db    0xA, 0             ; SALTO DE LINEA (LF)
-fmtX:           db    "x"                ; SALTO DE LINEA (LF)
-fmtEqual:       db    "="                ; SALTO DE LINEA (LF)
+fmtEqual:       db    "=", 0                ; SALTO DE LINEA (LF)
+fmtX:           db    0x78, 0                ; SALTO DE LINEA (LF)
 
 section .text                    ; SECCION DE LAS INSTRUCCIONES
  
