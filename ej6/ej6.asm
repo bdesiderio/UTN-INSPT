@@ -36,19 +36,6 @@ numero8:        resd    1                ; 1 dword (4 bytes)
 numero9:        resd    1                ; 1 dword (4 bytes)
 numero10:       resd    1                ; 1 dword (4 bytes)
 
-cadenaSorteo:
-        resb    0x0100           ; 256 bytes
-
-nrosGanadores:
-        resd    10               ; 10 dword
-
-cadena:
-        resb    0x0100           ; 256 bytes
-
-caracter:
-        resb    1                ; 1 byte (dato)
-        resb    3                ; 3 bytes (relleno)
-
 
 
 section .data                    ; SECCION DE LAS CONSTANTES
@@ -66,35 +53,16 @@ fmtLF:
         db    0xA, 0             ; SALTO DE LINEA (LF)
 
 consulteElNro:             db     "Consulte el Nro: " ,0
-ingreseNroGanador:             db     "Ingrese nro ganador: " ,0
-ingresadoEnPosicion:             db     "El nro fue ingresado en la posicion: " ,0
+ingreseNroGanador:         db     "Ingrese nro ganador: " ,0
+ingresadoEnPosicion:        db    "El nro fue ingresado en la posicion: " ,0
 
 section .text                    ; SECCION DE LAS INSTRUCCIONES
  
-leerCadena:                      ; RUTINA PARA LEER UNA CADENA USANDO GETS
-        push cadena
-        call gets
-        add esp, 4
-        ret
 
 leerNumero:                      ; RUTINA PARA LEER UN NUMERO ENTERO USANDO SCANF
         push numero
         push fmtInt
         call scanf
-        add esp, 8
-        ret
-
-leerCaracter:                      ; RUTINA PARA LEER UN NUMERO ENTERO USANDO SCANF
-        push caracter
-        push fmtChar
-        call scanf
-        add esp, 8
-        ret
-    
-mostrarCadena:                   ; RUTINA PARA MOSTRAR UNA CADENA USANDO PRINTF
-        push cadena
-        push fmtString
-        call printf
         add esp, 8
         ret
 
@@ -123,13 +91,6 @@ mostrarIngresadoEnPosicion:                   ; RUTINA PARA MOSTRAR UNA CADENA U
 mostrarNumero:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
         push dword [numero]
         push fmtInt
-        call printf
-        add esp, 8
-        ret
-
-mostrarCaracter:                 ; RUTINA PARA MOSTRAR UN CARACTER USANDO PRINTF
-        push dword [caracter]
-        push fmtChar
         call printf
         add esp, 8
         ret
