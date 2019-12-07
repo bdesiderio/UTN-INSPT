@@ -201,12 +201,13 @@ cambiarColumna:
 
 
 cambiarNroMinimo:
-    call limpiarCadena 
+    call mostrarColumnasMatrizText
     mov bx, [numero]
     mov [numeroMinimo], bx
 
 agregarCordeenadas:
     call escribirCoordenadas
+    call mostrarColumnasMatrizText
     jmp continuarCambiarColumna
 
 
@@ -214,10 +215,11 @@ irAlFinalDeLaCadena:
     mov esi,-1
 
     continuarIrAlFinalDeLaCadena:
+    call mostrarColumnasMatrizText
     inc esi
     mov cx,[cadena+esi]
     cmp cx,0
-        jmp irAlFinalDeLaCadena
+        jg continuarIrAlFinalDeLaCadena
     ret    
 
 escribirCoordenadas:
