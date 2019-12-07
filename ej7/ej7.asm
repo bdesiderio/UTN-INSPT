@@ -180,16 +180,6 @@ cambiarFila:
 
     dec esi
     
-    mov ax,[filas]
-    mov [numero],ax
-
-    call mostrarNumero
-    call mostrarSaltoDeLinea
-
-    mov [numero],esi
-    call mostrarNumero
-    call mostrarSaltoDeLinea
-    
     cmp esi,[filas]
         je salirDelPrograma
 
