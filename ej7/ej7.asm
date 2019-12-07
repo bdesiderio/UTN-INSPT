@@ -219,6 +219,7 @@ cambiarColumna:
 cambiarNroMinimo:
     mov bx, [numero]
     mov [numeroMinimo], bx
+    call limpiarCadena
 
 agregarCordeenadas:
     call escribirCoordenadas
@@ -229,8 +230,8 @@ irAlFinalDeLaCadena:
     mov esi,-1
 
     continuarIrAlFinalDeLaCadena:
-    inc esi
     mov cx,[cadena+esi]
+    inc esi
     cmp cx,0
         jg continuarIrAlFinalDeLaCadena
     ret    
