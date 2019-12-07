@@ -134,9 +134,7 @@ solicitarNro:
 
 salirDelPrograma:                ; PUNTO DE SALIDA DEL PROGRAMA USANDO EXIT
         call mostrarCadena
-        call limpiarCadena
         call mostrarSaltoDeLinea
-        call mostrarCadena
         push 0
         call exit
 
@@ -158,9 +156,7 @@ main:                            ; PUNTO DE INICIO DEL PROGRAMA
     mov [columnaActual],bx
 
     mov dx,-1
-
     mov [filaActual],dx
-
     mov dx,0
 
     call mostrarColumnasMatrizText              ; Seteo las columnas en [columnas]
@@ -173,16 +169,39 @@ main:                            ; PUNTO DE INICIO DEL PROGRAMA
     mov bx, [numero]
     mov [filas],bx
     
+    mov dx,0
+    mov [filaActual],dx
+    mov dx,0
+
 cambiarFila:
     mov esi,[filaActual]
     inc esi
     mov [filaActual],esi
+
+    dec esi
+    
+    mov ax,[filas]
+    mov [numero],ax
+
+    call mostrarNumero
+    call mostrarSaltoDeLinea
+
+    mov [numero],esi
+    call mostrarNumero
+    call mostrarSaltoDeLinea
+    
+    cmp esi,[filas]
+        je salirDelPrograma
 
 cambiarColumna:
     mov edi,0
     mov [columnaActual],edi
 
     continuarCambiarColumna:
+    mov edi,[columnaActual]
+    inc edi
+    mov [columnaActual],edi
+
     call solicitarNro
     call leerNumero
     mov bx,[numero]
@@ -191,31 +210,25 @@ cambiarColumna:
         je agregarCordeenadas
         jng cambiarNroMinimo
 
-    mov edi,[columnaActual]
-    inc edi
-    mov [columnaActual],edi
-
+    continuarContinuarCambiarColumna:
     cmp [columnas],edi
         je cambiarFila
-    jmp cambiarColumna
+    jmp continuarCambiarColumna
 
 
 cambiarNroMinimo:
-    call mostrarColumnasMatrizText
     mov bx, [numero]
     mov [numeroMinimo], bx
 
 agregarCordeenadas:
     call escribirCoordenadas
-    call mostrarColumnasMatrizText
-    jmp continuarCambiarColumna
+    jmp continuarContinuarCambiarColumna
 
 
 irAlFinalDeLaCadena:
     mov esi,-1
 
     continuarIrAlFinalDeLaCadena:
-    call mostrarColumnasMatrizText
     inc esi
     mov cx,[cadena+esi]
     cmp cx,0
@@ -230,6 +243,7 @@ escribirCoordenadas:
     
     inc esi
     mov bx, [filaActual]
+    add bx,48
     mov [cadena+esi],bx
     
     inc esi
@@ -238,6 +252,7 @@ escribirCoordenadas:
     
     inc esi
     mov bx, [columnaActual]
+    add bx,48
     mov [cadena+esi],bx
 
     inc esi
