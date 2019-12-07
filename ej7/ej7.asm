@@ -227,7 +227,7 @@ agregarCordeenadas:
 
 
 irAlFinalDeLaCadena:
-    mov esi,-1
+    mov esi,0
 
     continuarIrAlFinalDeLaCadena:
     mov cx,[cadena+esi]
@@ -238,7 +238,7 @@ irAlFinalDeLaCadena:
 
 escribirCoordenadas:
     call irAlFinalDeLaCadena
-
+    dec esi
     mov bx, [fmtAbrirParentesis]
     mov [cadena+esi],bx
     
