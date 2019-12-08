@@ -1,5 +1,3 @@
-; Se ingresa una cadena. La computadora la muestra en mayusculas.
-;
 ; En Windows (1 en la consola de NASM; 2 y 3 en la consola de Visual Studio):
 ; 1) nasm -f win32 ej3.asm --PREFIX _
 ; 2) link /out:ej3.exe ej3.obj libcmt.lib

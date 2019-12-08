@@ -131,6 +131,7 @@ salirDelPrograma:                ; PUNTO DE SALIDA DEL PROGRAMA USANDO EXIT
         call mostrarSaltoDeLinea
         call mostrarSaltoDeLinea
         call mostrarTxtGuiones
+        call mostrarSaltoDeLinea
 
         call mostrarTxtCantidadNrosIngresados
 
@@ -138,15 +139,18 @@ salirDelPrograma:                ; PUNTO DE SALIDA DEL PROGRAMA USANDO EXIT
         mov [numero],bx
         call mostrarNumero
 
+        call mostrarSaltoDeLinea
 
         mov ax,[nrosSumados]
         mov bx,[cantidadNros]
         
         div bx
         mov [numero],al
-
+        
         call mostrarTxtPromedio
         call mostrarNumero
+        call mostrarSaltoDeLinea
+        call mostrarTxtGuiones
 
         push 0
         call exit
