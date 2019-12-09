@@ -79,7 +79,6 @@ convertirSigCaracterEnMayuscula:
     mov dl,122
 
     mov [numero],bl
-    mov bl,[numero]
 
     cmp cl,bl
         jg continuar
@@ -87,12 +86,9 @@ convertirSigCaracterEnMayuscula:
     cmp bl,dl
         jg continuar
 
-    converMayus:
-    sub bx,32                                        
+    sub bl,32                                        
 
     continuar:
-    mov [numero],bl
-    mov bl, [numero]
     mov [caracter],bl                              ;mov [caracter],bx
     call mostrarCaracter
 
