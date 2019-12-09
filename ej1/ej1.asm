@@ -19,10 +19,12 @@ resultado:
 
 section .data                    ; SECCION DE LAS CONSTANTES
 
-fmtInt:         db    "%d", 0            ; FORMATO PARA NUMEROS ENTEROS
-fmtLF:          db    0xA, 0             ; SALTO DE LINEA (LF)
-fmtEqual:       db    "=", 0                ; SALTO DE LINEA (LF)
-fmtX:           db    0x78, 0                ; SALTO DE LINEA (LF)
+fmtInt:                         db    "%d", 0            ; FORMATO PARA NUMEROS ENTEROS
+fmtLF:                          db    0xA, 0             ; SALTO DE LINEA (LF)
+fmtString:                      db    "%s", 0            ; FORMATO PARA CADENAS
+fmtEqual:                       db    "=", 0                ; SALTO DE LINEA (LF)
+fmtX:                           db    0x78, 0                ; SALTO DE LINEA (LF)
+txtIngreseNro:          db    "Ingrese un nro: " ,0
 
 section .text                    ; SECCION DE LAS INSTRUCCIONES
  
@@ -46,6 +48,13 @@ mostrarResultado:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USAND
         call printf
         add esp, 8
         ret
+
+mostrarTxtIngreseNro:                   ; RUTINA PARA MOSTRAR UNA CADENA USANDO PRINTF
+    push txtIngreseNro
+    push fmtString
+    call printf
+    add esp, 8
+    ret 
 
 mostarEDI:                   ; RUTINA PARA MOSTRAR UN NUMERO ENTERO USANDO PRINTF
         push dword edi
@@ -85,6 +94,7 @@ multiplicarYMostrar:
 
 _start:
 main:                            ; PUNTO DE INICIO DEL PROGRAMA
+        call mostrarTxtIngreseNro
         call leerNumero
 
         mov edi,0
