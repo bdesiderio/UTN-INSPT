@@ -10,6 +10,7 @@
 
 
 section .bss                                ; SECCION DE LAS VARIABLES
+numero:             resd    1                ; 1 dword (4 bytes)
 
 cadena:   			resb    0x0100          ; 256 bytes
 
@@ -73,9 +74,26 @@ main:                            ; PUNTO DE INICIO DEL PROGRAMA
     call salirDelPrograma
 
 convertirSigCaracterEnMayuscula:
-    mov bx,[cadena+edi]
+    mov bl,[cadena+edi]
+    mov cl,96
+    mov dl,122
+
+    mov [numero],bl
+    mov bl,[numero]
+
+    cmp cl,bl
+        jg continuar
+
+    cmp bl,dl
+        jg continuar
+
+    converMayus:
     sub bx,32                                        
-    mov [caracter],bx                              ;mov [caracter],bx
+
+    continuar:
+    mov [numero],bl
+    mov bl, [numero]
+    mov [caracter],bl                              ;mov [caracter],bx
     call mostrarCaracter
 
     inc edi
